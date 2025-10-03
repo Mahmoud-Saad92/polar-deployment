@@ -1,26 +1,37 @@
 services:
   postgres:
     container_name: polar-postgres
-    image: bitnami/postgresql:15.0.0
+    image: postgres:15.0
     env_file:
       - ./.env
-    user: "1001:0"
     environment:
       POSTGRES_USER: ${POLAR_POSTGRES_USER}
       POSTGRES_PASSWORD: ${POLAR_POSTGRES_PASSWORD}
       POSTGRES_DB: 'polar_db'
-      POSTGRESQL_SHARED_BUFFERS: 128MB
-      POSTGRESQL_MAX_CONNECTIONS: 50
-      POSTGRESQL_EFFECTIVE_CACHE_SIZE: 512MB
-      POSTGRESQL_WORK_MEM: 8MB
-      POSTGRESQL_MAINTENANCE_WORK_MEM: 64MB
-      POSTGRESQL_LOG_CONNECTIONS: 'yes'
-      POSTGRESQL_LOG_DISCONNECTIONS: 'yes'
-      POSTGRESQL_LOG_STATEMENT: 'mod'                    # See every SQL query
-      POSTGRESQL_LOG_MIN_DURATION_STATEMENT: 500         # Catch slow queries
-      POSTGRESQL_LOG_LOCK_WAITS: 'on'                    # Debug deadlocks
+    command:
+      - "postgres"
+      - "-c"
+      - "shared_buffers=128MB"
+      - "-c"
+      - "max_connections=50"
+      - "-c"
+      - "effective_cache_size=512MB"
+      - "-c"
+      - "work_mem=8MB"
+      - "-c"
+      - "maintenance_work_mem=64MB"
+      - "-c"
+      - "log_connections=on"
+      - "-c"
+      - "log_disconnections=on"
+      - "-c"
+      - "log_statement=mod"
+      - "-c"
+      - "log_min_duration_statement=500"
+      - "-c"
+      - "log_lock_waits=on"
     volumes:
-      - polar-postgres-vol:/bitnami/postgresql
+      - polar-postgres-vol:/var/lib/postgresql/data
       - ./db/schema-postgres.sql:/docker-entrypoint-initdb.d/1-init.sql
     ports:
       - '${POSTGRES_PORT:-5432}:5432'
