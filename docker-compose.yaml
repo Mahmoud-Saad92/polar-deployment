@@ -62,4 +62,5 @@ networks:
 
 volumes:
   polar-postgres-vol:
+    name: polar-postgres-vol
     driver: local
