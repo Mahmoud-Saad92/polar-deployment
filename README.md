@@ -1,4 +1,4 @@
-# `Bazinga (BZA)` Docker
+# `Bazinga (BZA)` Deployment
 A public repository includes docker containers definitions required for polar bookshop
 
 ### Pre-Requisites:
