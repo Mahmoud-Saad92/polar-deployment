@@ -30,9 +30,26 @@ spec:
             limits:
               cpu: 200m
               memory: 120Mi
+          volumeMounts:
+            - name: init-sql
+              mountPath: /docker-entrypoint-initdb.d
+      volumes:
+        - name: init-sql
+          configMap:
+            name: postgres-init-sql
 
 ---
 
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-init-sql
+data:
+  shema-postgres.sql: |
+    CREATE SCHEMA IF NOT EXISTS catalogsvc;
+    CREATE SCHEMA IF NOT EXISTS ordersvc;
+
+---
 apiVersion: v1
 kind: Service
 metadata:

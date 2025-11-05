@@ -1,3 +1,2 @@
--- catalog-service DML
-
 CREATE SCHEMA IF NOT EXISTS catalogsvc;
+CREATE SCHEMA IF NOT EXISTS ordersvc;
