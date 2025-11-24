@@ -55,12 +55,32 @@ services:
           memory: 256M
           cpus: '0.5'
 
+  redis:
+    image: redis:8.4.0
+    container_name: polar-redis
+    env_file:
+      - .env
+    ports:
+      - '${REDIS_PORT:-6379}:6379'
+    volumes:
+      - polar-redis-vol:/data
+    networks:
+      redis:
+        aliases:
+          - 'redis'
+
 networks:
   postgres:
     name: polar-postgres-nw
+    external: true
+  redis:
+    name: polar-redis-nw
     external: true
 
 volumes:
   polar-postgres-vol:
     name: polar-postgres-vol
+    driver: local
+  polar-redis-vol:
+    name: polar-redis-vol
     driver: local
