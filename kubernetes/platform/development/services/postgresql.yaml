@@ -50,6 +50,7 @@ data:
     CREATE SCHEMA IF NOT EXISTS ordersvc;
 
 ---
+
 apiVersion: v1
 kind: Service
 metadata:
