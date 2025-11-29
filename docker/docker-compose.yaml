@@ -1,3 +1,5 @@
+name: polar-docker
+
 services:
   postgres:
     container_name: polar-postgres
